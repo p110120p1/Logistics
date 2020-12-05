@@ -47,57 +47,86 @@
                             <label class="col-lg-2 col-md-2 col-sm-12 control-label">合同生效时间:<font
                                     color="red">*</font></label>
                             <div class="col-lg-3 col-md-2">
-                                <input value="{{ data.contractStartTime }}" name="actualEvaluateAmount" type="text"
+                                <input value="{{ data.contractStartTime }}" name="contractStartTime" type="text"
                                        class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
 
-                            <label class="col-lg-2 col-md-2 col-sm-12 control-label">贷款金额(元):<font
+                            <label class="col-lg-2 col-md-2 col-sm-12 control-label">合同结束时间:<font
                                     color="red">*</font></label>
                             <div class="col-lg-3 col-md-2">
-                                <input value="{{ data.paymentAmount }}" name="paymentAmount" type="text"
+                                <input value="{{ data.contractEndTime }}" name="contractEndTime" type="text"
                                        class="form-control">
                             </div>
-                            <label class="col-lg-2 col-md-2 col-sm-12 control-label">运费金额(元):<font
+                            <label class="col-lg-2 col-md-2 col-sm-12 control-label">合同签订地点:<font
                                     color="red">*</font></label>
                             <div class="col-lg-3 col-md-2">
-                                <input value="{{ data.freightAmount }}" name="freightAmount" type="text"
+                                <input value="{{ data.contractAddr }}" name="contractAddr" type="text"
                                        class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-2 col-md-2 col-sm-12 control-label">罚款金额(元):<font
+                            <label class="col-lg-2 col-md-2 col-sm-12 control-label">甲方单位名称:<font
                                     color="red">*</font></label>
                             <div class="col-lg-3 col-md-2">
-                                <input value="{{ data.fineAmount }}" name="fineAmount" type="text"
+                                <input value="{{ data.firstCompanyName }}" name="firstCompanyName" type="text"
                                        class="form-control">
                             </div>
 
-                            <label class="col-lg-2 col-md-2 col-sm-12 control-label">违约金(元):<font
+                            <label class="col-lg-2 col-md-2 col-sm-12 control-label">甲方联系人:<font
                                     color="red">*</font></label>
                             <div class="col-lg-3 col-md-2">
-                                <input value="{{ data.liquidatedDamagesAmount }}" name="liquidatedDamagesAmount"
+                                <input value="{{ data.firstPersonName }}" name="firstPersonName"
                                        type="text"
                                        class="form-control">
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label class="col-lg-2 col-md-2 col-sm-12 control-label">说明:<font
+                            <label class="col-lg-2 col-md-2 col-sm-12 control-label">甲方联系人电话:<font
                                     color="red">*</font></label>
                             <div class="col-lg-3 col-md-2">
-                                <textarea value="{{ data.evaluateExplain }}" name="evaluateExplain"
+                                <input value="{{ data.firstPersonTel }}" name="firstPersonTel" type="text"
+                                       class="form-control">
+                            </div>
+
+                            <label class="col-lg-2 col-md-2 col-sm-12 control-label">乙方单位名称:<font
+                                    color="red">*</font></label>
+                            <div class="col-lg-3 col-md-2">
+                                <input value="{{ data.secondCompanyName }}" name="secondCompanyName"
+                                       type="text"
+                                       class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 col-md-2 col-sm-12 control-label">乙方联系人:<font
+                                    color="red">*</font></label>
+                            <div class="col-lg-3 col-md-2">
+                                <input value="{{ data.secondPersonName }}" name="secondPersonName" type="text"
+                                       class="form-control">
+                            </div>
+
+                            <label class="col-lg-2 col-md-2 col-sm-12 control-label">乙方联系人电话:<font
+                                    color="red">*</font></label>
+                            <div class="col-lg-3 col-md-2">
+                                <input value="{{ data.secondPersonTel }}" name="secondPersonTel"
+                                       type="text"
+                                       class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 col-md-2 col-sm-12 control-label">合同附件:<font
+                                    color="red">*</font></label>
+                            <div class="col-lg-3 col-md-2">
+                                <textarea value="{{ data.contractAttachment }}" name="contractAttachment"
                                           class="form-control">
 
                                 </textarea>
                             </div>
                         </div>
                         <!--隐藏域-->
-                        <input hidden value="{{ data.evaluatePeopleId }}" name="evaluatePeopleId">
-                        <input hidden value="{{ data.evaluatePeople }}" name="evaluatePeople">
-                        <input hidden value="{{ data.evaluateFinishTime }}" name="evaluateFinishTime">
-                        <input hidden value="{{ data.evaluateState }}" name="evaluateState">
+
+
 
                         <input hidden value="{{ data.companyId }}" name="companyId">
                         <input hidden value="{{ data.deptId }}" name="deptId">
@@ -110,7 +139,7 @@
 
 
                         <button type="button" class="btn btn-primary" onclick="btnSave()">保存</button>
-                        <a class="btn btn-danger" href="{% url 'fm:fmEvaluateEntry' %}">返回</a>
+                        <a class="btn btn-danger" href="{% url 'om:omOrderContract' %}">返回</a>
                     </form>
                 </div>
             </div>
@@ -160,14 +189,14 @@
                     validating: 'glyphicon glyphicon-refresh'
                 },
                 fields: {
-                    actualEvaluateAmount: {
+                    contractNum: {
                         validators: {
                             notEmpty: {
-                                message: '金额不能为空'
+                                message: '合同编号不能为空'
                             },
                             regexp: {//正则验证
                                 regexp: /^\d+(\.\d{1,2})?$/,
-                                message: '金额为数字'
+                                message: '编号为数字'
                             },
                         }
                     },
@@ -181,7 +210,8 @@
                                 message: '金额为数字'
                             },
                         }
-                    }, freightAmount: {
+                    },
+                    freightAmount: {
                         validators: {
                             notEmpty: {
                                 message: '金额不能为空'
