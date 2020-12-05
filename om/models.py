@@ -25,7 +25,7 @@ class omOrder(models.Model):
     taxpayerAddr = models.CharField(db_column='taxpayer_addr',max_length=280, verbose_name='纳税人地址', null=True)
     taxpayerTel = models.CharField(db_column='taxpayer_tel',max_length=20, verbose_name='纳税人电话', null=True)
     taxpayerBank = models.CharField(db_column='taxpayer_bank',max_length=280, verbose_name='纳税人开户行', null=True)
-    taxpayerBankNum = models.CharField(db_column='taxpayer_bank_num',max_length=24, verbose_name='纳税人识账号', null=True)
+    taxpayerBannkNum = models.CharField(db_column='taxpayer_bannk_num',max_length=24, verbose_name='纳税人识账号', null=True)
     sendOrder = models.IntegerField(db_column='send_order',verbose_name='是否发货单：1-是，2-否', null=True)
     transportOrder = models.IntegerField(db_column='transport_order',verbose_name='是否托运单：1-是，2-否', null=True)
     backOrder = models.IntegerField(db_column='back_order',verbose_name='是否回单：1-是，2-否', null=True)

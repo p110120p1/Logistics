@@ -88,7 +88,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'Logistics',    #你的数据库名称
         'USER': 'root',   #你的数据库用户名
-        'PASSWORD': 'woaimama365', #你的数据库密码
+        'PASSWORD': 'p110120p', #你的数据库密码
         'HOST': '127.0.0.1', #你的数据库主机，留空默认为localhost
         'PORT': '3306', #你的数据库端口
     }
