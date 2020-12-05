@@ -23,6 +23,7 @@ urlpatterns = [
     path('fm/', include('fm.urls', namespace='fm')),
     path('om/', include('om.urls', namespace='om')),
     path('sm/', include('sm.urls', namespace='sm')),
+    path('wf/', include('wf.urls', namespace='wf')),
     url('^$',views.login,name='login') # 默认路由,程序运行的默认页面
 ]
 

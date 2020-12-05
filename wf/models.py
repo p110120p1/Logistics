@@ -5,7 +5,7 @@ from django.db import models
 class wfWorkflowType(models.Model):
     WorkflowTypeId = models.CharField(db_column='workflow_type_id',max_length=32,primary_key=True,verbose_name="主键")
     orderType = models.CharField(db_column='order_type',max_length=2, verbose_name="订单类型",null=False)
-    workflowId = models.ForeignKey('wf.wfWorkflow',null=False, to_field='workflowId', on_delete=models.CASCADE,
+    workflowId = models.ForeignKey('wf.wfWorkflow',null=False, to_field='WorkflowId', on_delete=models.CASCADE,
                              verbose_name="工作流外键",db_column='workflow_id')
 
     # 默认添加字段
@@ -63,7 +63,7 @@ class wfWorkflowStep(models.Model):
 # 表21
 class wfReplace(models.Model):
     ReplaceId = models.CharField(db_column='replace_id',max_length=32,primary_key=True,verbose_name="主键")
-    workflowStepId = models.ForeignKey('wf.wfWorkflowStep',null=False, to_field='workflowStepId', on_delete=models.CASCADE,
+    workflowStepId = models.ForeignKey('wf.wfWorkflowStep',null=False, to_field='WorkflowStepId', on_delete=models.CASCADE,
                              verbose_name="流转步骤外键",db_column='workflow_step_id')
     number = models.CharField(db_column='number',max_length=12, verbose_name="编码",null=False)
     field = models.CharField(db_column='filed',max_length=20, verbose_name="字段",null=False)
@@ -86,9 +86,9 @@ class wfReplace(models.Model):
 # 表22
 class wfLog(models.Model):
     logId = models.CharField(db_column='log_id',max_length=32,primary_key=True,verbose_name="主键")
-    workflowId = models.ForeignKey('wf.wfWorkflow',null=False, to_field='workflowId', on_delete=models.CASCADE,
+    workflowId = models.ForeignKey('wf.wfWorkflow',null=False, to_field='WorkflowId', on_delete=models.CASCADE,
                              verbose_name="工作流外键",db_column='workflow_id')
-    workflowStepId = models.ForeignKey('wf.wfWorkflowStep', null=False, to_field='workflowStepId',
+    workflowStepId = models.ForeignKey('wf.wfWorkflowStep', null=False, to_field='WorkflowStepId',
                                     on_delete=models.CASCADE,verbose_name="流转步骤外键",db_column='workflow_step_id')
     peopleNumber = models.CharField(db_column='people_number',max_length=12, verbose_name="处理人编码",null=False,auto_created=True)
     peopleName = models.CharField(db_column='people_name',max_length=20, verbose_name="处理人名称",null=False,auto_created=True)

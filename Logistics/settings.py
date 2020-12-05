@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'rm',
     'fm',
     'om',
-    'sm'
+    'sm',
+    'wf',
 ]
 
 MIDDLEWARE = [
