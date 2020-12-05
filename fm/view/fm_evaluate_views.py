@@ -4,9 +4,11 @@ from fm.dao import evaluateDao
 from tools import shareMethodHelper
 from django.forms.models import model_to_dict
 from datetime import datetime
+from django.views.decorators.clickjacking import xframe_options_exempt
 # Create your views here.
 
 # 查看结算表
+@xframe_options_exempt  # 必须啊添加这句话，要不然不能显示在iframe中
 def fmEvaluateEntry(request):
     return render(request, 'fm/evaluate/fmEvaluateEntry.html')
 # 按照查询信息
@@ -34,6 +36,7 @@ def findFmEvaluate(request):
         datas.append(data)  # 将字典添加到list中
     return HttpResponse(json.dumps({'total':totalLength,'rows':datas}),content_type='application/json') # total rows 必须叫这个名字
 # 新增结算单
+@xframe_options_exempt  # 必须啊添加这句话，要不然不能显示在iframe中
 def addFmEvaluate(request):
     data = {}
     if request.method == 'POST':
@@ -61,6 +64,7 @@ def addFmEvaluate(request):
 
         return render(request,'fm/evaluate/addFmEvaluate.html',{'data':data})
 # 查看结算单信息
+@xframe_options_exempt  # 必须啊添加这句话，要不然不能显示在iframe中
 def viewFmEvaluate(request):
     evaluateId = request.GET.get('evaluateId')
     evaluateInfo = evaluateDao.queryFmEvaluateById(evaluateId) # 根据evaluateId去对应的纪录
@@ -71,6 +75,7 @@ def viewFmEvaluate(request):
     data['updateTime'] = shareMethodHelper.dateTimeToStr(data['updateTime'])
     return render(request, 'fm/evaluate/viewFmEvaluate.html', {'data':data})
 # 编辑结算单信息
+@xframe_options_exempt  # 必须啊添加这句话，要不然不能显示在iframe中
 def editFmEvaluate(request):
     if request.method == "POST":
         # 从前端获取所有的请求参数

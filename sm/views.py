@@ -14,6 +14,7 @@ from django.http import JsonResponse
 from sm import common
 from sm.DAO import systemMenuDao, systemUserDao, systemRoleDao
 import io
+from django.views.decorators.clickjacking import xframe_options_exempt
 @login_required
 def errorPage(request):
     return render(request, 'error.html')
@@ -127,6 +128,7 @@ def index(request):
 
 ###########################################################################################################
 # 用户管理
+@xframe_options_exempt
 def userManage(request):
     menu_info = systemRoleDao.queryAllRole()
     return  render(request, 'sm/user/userManage.html', {'menu_info':menu_info})
@@ -176,6 +178,7 @@ def getUserInfo(request):
                         content_type='application/json')
 
 # 用户添加
+@xframe_options_exempt
 def userAdd(request):
     if request.method == 'POST':
         user_info = {}
@@ -197,6 +200,7 @@ def userAdd(request):
 
 
 # 用户编辑
+@xframe_options_exempt
 @login_required
 def userEdit(request):
     if request.method == 'POST':
@@ -234,6 +238,7 @@ def userEdit(request):
 
 
 # 用户信息查询（用户个人信息）0
+@xframe_options_exempt
 @login_required
 def userInfo(request):
     u_name = request.session.get('u_name')  # 从session中获取用户名
@@ -251,6 +256,7 @@ def userInfo(request):
 
 
 # 用户密码修改（用户个人信息）
+@xframe_options_exempt
 @login_required
 def userPwdUpdate(request):
     u_name = request.session.get('u_name')
@@ -333,6 +339,7 @@ def userInfoExport(request):
 ##########################################################################################################
 # 角色管理
 @login_required
+@xframe_options_exempt
 def roleManage(request):
     role_list = role.objects.all()
     return render(request, 'sm/role/roleManage.html', {'role_list': role_list})
@@ -340,6 +347,7 @@ def roleManage(request):
 
 # 角色添加
 @login_required
+@xframe_options_exempt
 def roleAdd(request):
     if request.method == 'POST':
         r_name = request.POST.get('r_name')
@@ -357,6 +365,7 @@ def roleAdd(request):
 
 # 角色编辑（详情）
 @login_required
+@xframe_options_exempt
 def roleEdit(request, id):
     if request.method == 'POST':
         r_name = request.POST.get('r_name')
@@ -434,6 +443,7 @@ def getMenu(request):
 ##########################################################################################################
 # 菜单管理
 @login_required
+@xframe_options_exempt
 def menuManage(request):
     # 查询system_menu的集合
     menu_list = menu.objects.order_by('code', 'parent_code')
@@ -455,6 +465,7 @@ def menuDelByCode(request):
 
 # 编辑菜单并保存
 @login_required
+@xframe_options_exempt
 def menuEdit(request, code):
     if request.method == 'POST':
         # menu_info = menu.objects.filter(code=code).first()  # 不先查询的话，执行save方法时，为保存操作，而非更新
@@ -480,6 +491,7 @@ def menuEdit(request, code):
 
 # 添加菜单并保存
 @login_required
+@xframe_options_exempt
 def menuAdd(request, code):
     if request.method == 'POST':
         menu_info = {}  # 定义一个菜单字典
