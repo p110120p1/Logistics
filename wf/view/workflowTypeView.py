@@ -28,10 +28,6 @@ def findWorkflowTypeEntry(request):
     print(pageNumber)
     print("---------------------")
     workflowTypeList = wfWorkflowType.objects.filter()# 查询结果为queryset
-
-
-
-
     # 分页
     totalLength = len(workflowTypeList)  # 查询结果的总长度
     workflowTypeListPage = workflowTypeList[(pageNumber - 1) * pageSize:(pageNumber) * pageSize]  # 一页显示的数据
@@ -45,3 +41,7 @@ def findWorkflowTypeEntry(request):
         datas.append(data)  # 将字典添加到list中
     return HttpResponse(json.dumps({'total': totalLength, 'rows': datas}),
                         content_type='application/json')  # total rows 必须叫这个名字
+
+
+def test1():
+    pass
