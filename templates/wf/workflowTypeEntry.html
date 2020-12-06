@@ -139,12 +139,12 @@
         })
     });
     //操作按钮
-    {#function actionFormatter(value, row, index) {#}
-    {#    return [#}
-    {#         '<a class="btn btn-info btn-sm" id="btnedit" href="/fm/viewFmEvaluate/?evaluateId=' + row.evaluateId + '" >查看</a>',#}
-    {#         '<a class="btn btn-danger btn-sm" id="btndel" href="#" onclick="delRow('+row.evaluateId+')">删除</a>' ,#}
-    {#    ].join('');#}
-
+    function actionFormatter(value, row, index) {
+        return [
+            '<a class="btn btn-info btn-sm" id="btnedit" href="/wf/editWorkflowType?WorkflowTypeId=' + row.WorkflowTypeId + '" >查看</a>',
+            '<a class="btn btn-danger btn-sm" id="btndel" href="#" onclick="delRow(' + row.WorkflowTypeId + ')">删除</a>',
+        ].join('');
+    }
     //搜索框改变时的方法
     $("#applyNum").change(function () {
         $("#tb_rows").bootstrapTable('refresh');

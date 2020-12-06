@@ -6,8 +6,11 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.clickjacking import xframe_options_exempt
 from wf.models import wfWorkflowType
+from wf.models import wfWorkflow
 from django.forms.models import model_to_dict
 from tools import shareMethodHelper
+import time
+import datetime
 # Create your views here.
 
 # 主页面
@@ -47,8 +50,58 @@ def findWorkflowTypeEntry(request):
 @login_required
 @xframe_options_exempt
 def addWorkflowType(request):
-    return render(request,'wf/addWorkflowType.html')
+    workflows = wfWorkflow.objects.filter()
+    return render(request,'wf/addWorkflowType.html',{'workflows':workflows})
 
 
+# 添加保存
+@login_required
+@xframe_options_exempt
+def addWorkflowTypeSave(request):
+    orderType = request.POST.get('orderType')
+    workflowId = request.POST.get('workflowId')
+    companyId = request.POST.get('companyId')
+    deptId = request.POST.get('deptId')
+    createUserId = request.POST.get('createUserId')
+    updateUserId = request.POST.get('updateUserId')
+    delFlag = request.POST.get('delFlag')
+    # 生成ID
+    WorkflowTypeId = 2020001000
+    for i in range(999999999):
+        if len(wfWorkflowType.objects.filter(WorkflowTypeId=WorkflowTypeId)):
+            WorkflowTypeId += 1
+        else:
+            break
 
+    '2020-12-05 22:12:39.178561'
+    createTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    updateTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    createTime1 = str(createTime)
+    createTime2 = '.178561'
+    createTime = createTime1 + createTime2
+    print("---------------------")
+    print(createTime)
+    print("---------------------")
+    # 开始保存
+    aworkflowtype = wfWorkflowType()
+    aworkflowtype.WorkflowTypeId = WorkflowTypeId
+    aworkflowtype.orderType = orderType
+    # 外键需要传对象
+    aworkflow = wfWorkflow.objects.get(WorkflowId=workflowId)
+    aworkflowtype.workflowId = aworkflow
+    aworkflowtype.companyId = companyId
+    aworkflowtype.deptId = deptId
+    aworkflowtype.createUserId = createUserId
+    aworkflowtype.updateUserId = updateUserId
+    aworkflowtype.delFlag = delFlag
+    aworkflowtype.createTime = createTime
+    aworkflowtype.updateTime = str(updateTime)
+    aworkflowtype.save()
+    return render(request,'wf/workflowTypeEntry.html')
+
+
+@login_required
+@xframe_options_exempt
+def editWorkflowType(request):
+    return render(request,'wf/editWorkflowType.html')
 
