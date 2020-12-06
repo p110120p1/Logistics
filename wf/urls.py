@@ -13,7 +13,7 @@ urlpatterns = [
     # 工作流类型
     url(r'^workflowTypeEntry$', workflowTypeView.workflowTypeEntry, name='workflowTypeEntry'),
     url(r'^findWorkflowTypeEntry$', workflowTypeView.findWorkflowTypeEntry, name='findWorkflowTypeEntry'),
-
+    url(r'^addWorkflowType$', workflowTypeView.addWorkflowType, name='addWorkflowType'),
 
 
     # 工作流信息

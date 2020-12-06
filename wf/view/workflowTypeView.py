@@ -10,13 +10,13 @@ from django.forms.models import model_to_dict
 from tools import shareMethodHelper
 # Create your views here.
 
-
+# 主页面
 @login_required
 @xframe_options_exempt
 def workflowTypeEntry(request):
     return render(request,'wf/workflowTypeEntry.html')
 
-
+# 主页面信息查询
 @login_required
 @xframe_options_exempt
 def findWorkflowTypeEntry(request):
@@ -43,5 +43,12 @@ def findWorkflowTypeEntry(request):
                         content_type='application/json')  # total rows 必须叫这个名字
 
 
-def test1():
-    pass
+# 添加页面
+@login_required
+@xframe_options_exempt
+def addWorkflowType(request):
+    return render(request,'wf/addWorkflowType.html')
+
+
+
+
