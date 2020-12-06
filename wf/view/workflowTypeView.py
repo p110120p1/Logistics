@@ -140,3 +140,4 @@ def deleteWorkflowType(request):
     aWorkflowType = wfWorkflowType.objects.get(WorkflowTypeId=WorkflowTypeId)
     aWorkflowType.delete()
     return render(request,'wf/workflowTypeEntry.html')
+#---------------------------------------工作流类型功能结束---------------------------------------
