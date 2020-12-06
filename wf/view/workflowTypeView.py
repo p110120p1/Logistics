@@ -130,3 +130,13 @@ def editWorkflowTypeSave(request):
     aworkflowtype.updateTime = str(updateTime)
     aworkflowtype.save()
     return render(request,'wf/workflowTypeEntry.html')
+
+
+@login_required
+@xframe_options_exempt
+def deleteWorkflowType(request):
+    # 如果假删的话需要修改
+    WorkflowTypeId = request.GET.get('WorkflowTypeId')
+    aWorkflowType = wfWorkflowType.objects.get(WorkflowTypeId=WorkflowTypeId)
+    aWorkflowType.delete()
+    return render(request,'wf/workflowTypeEntry.html')

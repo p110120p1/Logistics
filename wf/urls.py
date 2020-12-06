@@ -17,6 +17,7 @@ urlpatterns = [
     url(r'^addWorkflowTypeSave$', workflowTypeView.addWorkflowTypeSave, name='addWorkflowTypeSave'),
     url(r'^editWorkflowType$', workflowTypeView.editWorkflowType, name='editWorkflowType'),
     url(r'^editWorkflowTypeSave$', workflowTypeView.editWorkflowTypeSave, name='editWorkflowTypeSave'),
+    url(r'^deleteWorkflowType$', workflowTypeView.deleteWorkflowType, name='deleteWorkflowType'),
     # 工作流信息
     url(r'^workflowEntry$', workflowView.workflowEntry, name='workflowEntry'),
 
