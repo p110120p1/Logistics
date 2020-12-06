@@ -5,11 +5,11 @@
         <h1 class="page-header" style="font-size: 14px ; text-align: center">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3>新建工作流类型信息</h3>
+                    <h3>修改工作流类型信息</h3>
                 </div>
                 <div class="panel-body">
                     <hr>
-                    <form id="my_form" action="/wf/addWorkflowTypeSave" method="post" enctype="multipart/form-data"
+                    <form id="my_form" action="/wf/editWorkflowTypeSave" method="post" enctype="multipart/form-data"
                           class="form-horizontal group-border hover-stripped">
                         {% csrf_token %}   <!--加入这行 -->
 
@@ -17,20 +17,20 @@
                         <label hidden class="col-lg-2 col-md-2 col-sm-12 control-label">工作流类型主键:<font
                                 color="red">*</font></label>
                         <div hidden class="col-lg-3 col-md-5">
-                            <input  name="WorkflowTypeId" type="text"
+                            <input  value="{{ aWorkflowType.WorkflowTypeId }}" name="WorkflowTypeId" type="text"
                                    class="form-control" readonly>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-2 col-md-2 col-sm-12 control-label">订单类型:<font
                                     color="red">*</font></label>
                             <div class="col-lg-3 col-md-5">
-                                <input  name="orderType" type="text"
+                                <input value="{{ aWorkflowType.orderType }}" name="orderType" type="text"
                                        class="form-control">
                             </div>
                             <label class="col-lg-2 col-md-2 col-sm-12 control-label">工作流外键:<font
                                     color="red">*</font></label>
                             <div class="col-lg-3 col-md-5">
-                                <select name="workflowId" class="form-control">
+                                <select name="workflowId" id="workflowId" class="form-control">
                                     {% for foo in workflows %}
                                         <option value="{{ foo.WorkflowId }}">{{ foo.WorkflowId }}</option>
                                     {% endfor %}
@@ -45,13 +45,13 @@
                             <label class="col-lg-2 col-md-2 col-sm-12 control-label">公司ID:<font
                                     color="red">*</font></label>
                             <div class="col-lg-3 col-md-5">
-                                <input  name="companyId" type="text"
+                                <input value="{{ aWorkflowType.companyId }}"  name="companyId" type="text"
                                        class="form-control">
                             </div>
                             <label class="col-lg-2 col-md-2 col-sm-12 control-label">机构ID:<font
                                     color="red">*</font></label>
                             <div class="col-lg-3 col-md-5">
-                                <input  name="deptId" type="text"
+                                <input value="{{ aWorkflowType.deptId }}" name="deptId" type="text"
                                        class="form-control">
                             </div>
                     </div>
@@ -60,13 +60,13 @@
                             <label class="col-lg-2 col-md-2 col-sm-12 control-label">创建人ID:<font
                                     color="red">*</font></label>
                             <div class="col-lg-3 col-md-5">
-                                <input  name="createUserId" type="text"
+                                <input value="{{ aWorkflowType.createUserId }}" name="createUserId" type="text"
                                        class="form-control">
                             </div>
                             <label class="col-lg-2 col-md-2 col-sm-12 control-label">创建时间:<font
                                     color="red">*</font></label>
                             <div class="col-lg-3 col-md-5">
-                                <input  name="createTime" type="text"
+                                <input value="{{ aWorkflowType.createTime }}" name="createTime" type="text"
                                        class="form-control" readonly>
                             </div>
                     </div>
@@ -75,13 +75,13 @@
                             <label class="col-lg-2 col-md-2 col-sm-12 control-label">更新人ID:<font
                                     color="red">*</font></label>
                             <div class="col-lg-3 col-md-5">
-                                <input  name="updateUserId" type="text"
+                                <input value="{{ aWorkflowType.updateUserId }}" name="updateUserId" type="text"
                                        class="form-control">
                             </div>
                             <label class="col-lg-2 col-md-2 col-sm-12 control-label">更新时间:<font
                                     color="red">*</font></label>
                             <div class="col-lg-3 col-md-5">
-                                <input  name="updateTime" type="text"
+                                <input value="{{ aWorkflowType.updateTime }}" name="updateTime" type="text"
                                        class="form-control" readonly>
                             </div>
                     </div>
@@ -91,7 +91,7 @@
                             <label class="col-lg-2 col-md-2 col-sm-12 control-label">是否删除:<font
                                     color="red">*</font></label>
                             <div class="col-lg-3 col-md-5">
-                                <select name="delFlag" class="form-control">
+                                <select name="delFlag" id="delFlag" class="form-control">
                                     <option value="0">未删除
                                     </option>
                                     <option value="1" >删除
@@ -104,7 +104,7 @@
 
 
                         <button type="button" class="btn btn-primary" onclick="btnSave()">保存</button>
-                        <a class="btn btn-danger" href="{% url 'fm:fmEvaluateEntry' %}">返回</a>
+                        <a class="btn btn-danger" href="{% url 'wf:workflowTypeEntry' %}">返回</a>
                     </form>
                 </div>
             </div>
@@ -112,17 +112,19 @@
     </div>
     <!--保存js方法-->
     <script type="text/javascript">
+        $("#workflowId option[value='{{ aWorkflowType.workflowId }}']").attr("selected","selected");
+        $("#delFlag option[value='{{ aWorkflowType.delFlag }}']").attr("selected","selected");
         function btnSave() {
             BootstrapDialog.show({
                 title: '信息提示',
-                message: '确定新建?',
+                message: '确定修改?',
                 buttons: [{
                     label: '确定',
                     action: function (dialogItself) {
                         dialogItself.close();
                         BootstrapDialog.show({
                             title: '信息提示',
-                            message: '新建成功！',
+                            message: '修改成功！',
                             buttons: [{
                                 label: '关闭',
                                 action: function (dialogItself) {

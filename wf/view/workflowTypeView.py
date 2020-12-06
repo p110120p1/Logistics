@@ -27,9 +27,6 @@ def findWorkflowTypeEntry(request):
     pageNumber = request.GET.get('pageNumber')
     pageSize = int(pageSize)
     pageNumber = int(pageNumber)
-    print("---------------------")
-    print(pageNumber)
-    print("---------------------")
     workflowTypeList = wfWorkflowType.objects.filter()# 查询结果为queryset
     # 分页
     totalLength = len(workflowTypeList)  # 查询结果的总长度
@@ -79,9 +76,6 @@ def addWorkflowTypeSave(request):
     createTime1 = str(createTime)
     createTime2 = '.178561'
     createTime = createTime1 + createTime2
-    print("---------------------")
-    print(createTime)
-    print("---------------------")
     # 开始保存
     aworkflowtype = wfWorkflowType()
     aworkflowtype.WorkflowTypeId = WorkflowTypeId
@@ -103,5 +97,36 @@ def addWorkflowTypeSave(request):
 @login_required
 @xframe_options_exempt
 def editWorkflowType(request):
-    return render(request,'wf/editWorkflowType.html')
+    WorkflowTypeId = request.GET.get('WorkflowTypeId')
+    workflows = wfWorkflow.objects.filter()
+    aWorkflowType = wfWorkflowType.objects.get(WorkflowTypeId=WorkflowTypeId)
+    return render(request,'wf/editWorkflowType.html',{'aWorkflowType':aWorkflowType,'workflows':workflows})
 
+
+@login_required
+@xframe_options_exempt
+def editWorkflowTypeSave(request):
+    WorkflowTypeId = request.POST.get('WorkflowTypeId')
+    # 初始化修改对象
+    aworkflowtype = wfWorkflowType.objects.get(WorkflowTypeId=WorkflowTypeId)
+    orderType = request.POST.get('orderType')
+    workflowId = request.POST.get('workflowId')
+    companyId = request.POST.get('companyId')
+    deptId = request.POST.get('deptId')
+    createUserId = request.POST.get('createUserId')
+    updateUserId = request.POST.get('updateUserId')
+    delFlag = request.POST.get('delFlag')
+    updateTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    # 开始保存
+    aworkflowtype.orderType = orderType
+    # 外键需要传对象
+    aworkflow = wfWorkflow.objects.get(WorkflowId=workflowId)
+    aworkflowtype.workflowId = aworkflow
+    aworkflowtype.companyId = companyId
+    aworkflowtype.deptId = deptId
+    aworkflowtype.createUserId = createUserId
+    aworkflowtype.updateUserId = updateUserId
+    aworkflowtype.delFlag = delFlag
+    aworkflowtype.updateTime = str(updateTime)
+    aworkflowtype.save()
+    return render(request,'wf/workflowTypeEntry.html')
